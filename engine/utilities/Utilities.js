@@ -78,7 +78,7 @@ function registerPixelPerfectFont(font, rootElement, className) {
             }
         }
     });
-    observer.observe(rootElement, { subtree: true, childList: true });
+    observer.observe(rootElement, { attributes : true, subtree: true, childList: true });
 }
 
 export { applyPixelPerfectFontToElement, registerPixelPerfectFont }

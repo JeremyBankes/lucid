@@ -31,6 +31,10 @@ class Interface {
         return this.overlay.contentDocument;
     }
 
+    get path() {
+        return this.overlay.contentWindow.location.pathname;
+    }
+
     async load(source) {
         this.overlay.src = source;
         await this.waitForFrameLoad();
