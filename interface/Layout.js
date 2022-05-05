@@ -1,4 +1,4 @@
-import Container from '/scripts/engine/interface/Container.js';
+import Container from './Container.js';
 
 export default class Layout {
 

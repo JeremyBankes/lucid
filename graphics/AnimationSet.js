@@ -1,4 +1,4 @@
-import Animation from '/scripts/engine/graphics/Animation.js';
+import Animation from './Animation.js';
 
 export default class AnimationSet {
 

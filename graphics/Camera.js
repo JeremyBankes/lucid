@@ -1,4 +1,4 @@
-import Renderer from '/scripts/engine/graphics/Renderer.js';
+import Renderer from './Renderer.js';
 
 export default class Camera {
 

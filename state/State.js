@@ -1,5 +1,5 @@
-import Renderer from '/scripts/engine/graphics/Renderer.js';
-import RootComponent from '/scripts/engine/interface/RootComponent.js';
+import Renderer from '../graphics/Renderer.js';
+import RootComponent from '../interface/RootComponent.js';
 
 export default class State {
 

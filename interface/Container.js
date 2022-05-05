@@ -1,5 +1,5 @@
-import Renderer from '/scripts/engine/graphics/Renderer.js';
-import Component from '/scripts/engine/interface/Component.js';
+import Renderer from '../graphics/Renderer.js';
+import Component from './Component.js';
 
 export default class Container extends Component {
 

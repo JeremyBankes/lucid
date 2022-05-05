@@ -1,6 +1,3 @@
-import BitmapFont from '/scripts/engine/graphics/BitmapFont.js';
-import SpriteSheet from '/scripts/engine/graphics/SpriteSheet.js';
-import Texture from '/scripts/engine/graphics/Texture.js';
 
 /**
  * @typedef {'texture'|'sheet'|'font'} LoadRequestType

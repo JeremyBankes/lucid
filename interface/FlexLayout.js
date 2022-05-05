@@ -1,5 +1,5 @@
-import Container from '/scripts/engine/interface/Container.js';
-import Layout from '/scripts/engine/interface/Layout.js';
+import Container from './Container.js';
+import Layout from './Layout.js';
 
 /**
  * @typedef {"row"|"column"|"row-inverse"|"column-inverse"} FlexDirection

@@ -1,4 +1,4 @@
-import GlyphSheet from '/scripts/engine/graphics/GlyphSheet.js';
+import GlyphSheet from './GlyphSheet.js';
 
 /**
  * @typedef {object} CharacterGlyphMeta

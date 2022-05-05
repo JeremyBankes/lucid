@@ -1,5 +1,5 @@
-import Renderer from '/scripts/engine/graphics/Renderer.js';
-import StateManager from '/scripts/engine/state/StateManager.js';
+import Renderer from './graphics/Renderer.js';
+import StateManager from './state/StateManager.js';
 
 /**
  * A class to represent a game. Extend from this class to add application specific functionality.

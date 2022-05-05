@@ -1,7 +1,7 @@
-import Assets from '/scripts/engine/assets/Assets.js';
-import Input from '/scripts/engine/utilities/Input.js';
-import Timer from '/scripts/engine/utilities/Timer.js';
-import Tools from '/scripts/engine/utilities/Tools.js';
+import Assets from './assets/Assets.js';
+import Input from './utilities/Input.js';
+import Timer from './utilities/Timer.js';
+import Tools from './utilities/Tools.js';
 
 export default {
     tools: new Tools(),

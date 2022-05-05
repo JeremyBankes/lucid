@@ -1,6 +1,6 @@
-import Renderer from '/scripts/engine/graphics/Renderer.js';
-import SpriteSheet from '/scripts/engine/graphics/SpriteSheet.js';
-import Lucid from '/scripts/engine/Lucid.js';
+import Lucid from '../Lucid.js';
+import Renderer from './Renderer.js';
+import SpriteSheet from './SpriteSheet.js';
 
 export default class Animation {
 

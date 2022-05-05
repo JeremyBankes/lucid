@@ -1,5 +1,5 @@
-import Camera from '/scripts/engine/graphics/Camera.js';
-import Renderer from '/scripts/engine/graphics/Renderer.js';
+import Camera from './Camera.js';
+import Renderer from './Renderer.js';
 
 export default class WorldCamera extends Camera {
 

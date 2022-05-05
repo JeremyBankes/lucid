@@ -1,4 +1,4 @@
-import Texture from '/scripts/engine/graphics/Texture.js';
+import Texture from './Texture.js';
 
 /**
  * @typedef {object} Glyph

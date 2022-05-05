@@ -1,10 +1,9 @@
-import Animation from '/scripts/engine/graphics/Animation.js';
-import BitmapFont from '/scripts/engine/graphics/BitmapFont.js';
-import Camera from '/scripts/engine/graphics/Camera.js';
-import GlyphSheet from '/scripts/engine/graphics/GlyphSheet.js';
-import SpriteSheet from '/scripts/engine/graphics/SpriteSheet.js';
-import Texture from '/scripts/engine/graphics/Texture.js';
-import Anchor from '/scripts/engine/utilities/Anchor.js';
+import Anchor from '../utilities/Anchor.js';
+import BitmapFont from './BitmapFont.js';
+import Camera from './Camera.js';
+import GlyphSheet from './GlyphSheet.js';
+import SpriteSheet from './SpriteSheet.js';
+import Texture from './Texture.js';
 
 export default class Renderer {
 

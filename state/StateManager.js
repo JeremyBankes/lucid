@@ -1,4 +1,4 @@
-import State from '/scripts/engine/state/State.js';
+import State from './State.js';
 
 export default class StateManager {
 

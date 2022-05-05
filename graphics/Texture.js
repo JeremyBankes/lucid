@@ -1,4 +1,4 @@
-import Color from '/scripts/engine/utilities/Color.js';
+import Color from '../utilities/Color.js';
 
 /**
  * @callback FilterAction
