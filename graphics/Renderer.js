@@ -1,4 +1,5 @@
 import Anchor from '../utilities/Anchor.js';
+import Animation from './Animation.js';
 import BitmapFont from './BitmapFont.js';
 import Camera from './Camera.js';
 import GlyphSheet from './GlyphSheet.js';

@@ -1,3 +1,6 @@
+import BitmapFont from '../graphics/BitmapFont.js';
+import SpriteSheet from '../graphics/SpriteSheet.js';
+import Texture from '../graphics/Texture.js';
 
 /**
  * @typedef {'texture'|'sheet'|'font'} LoadRequestType
