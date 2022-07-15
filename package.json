@@ -20,5 +20,8 @@
     "bugs": {
         "url": "https://github.com/jeremybankes/lucid/issues"
     },
-    "homepage": "https://github.com/jeremybankes/lucid#readme"
+    "homepage": "https://github.com/jeremybankes/lucid#readme",
+    "devDependencies": {
+        "typescript": "^4.7.4"
+    }
 }
