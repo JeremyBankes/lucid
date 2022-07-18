@@ -11,11 +11,11 @@ export default class OrthographicCamera extends Camera {
         const farPlusNear = far + near;
         const farMinusNear = far - near;
         super(new Matrix4(
-            2 / (rightMinusLeft), 0, 0, -((rightPlusLeft) / (rightMinusLeft)),
-            0, 2 / (topMinusBottom), 0, -((topPlusBottom) / (topMinusBottom)),
-            0, 0, -2 / (farMinusNear), - ((farPlusNear) / (farMinusNear)),
+            2 / rightMinusLeft, 0, 0, (-rightPlusLeft / rightMinusLeft),
+            0, 2 / topMinusBottom, 0, (-topPlusBottom / topMinusBottom),
+            0, 0, -2 / farMinusNear, (-farPlusNear / farMinusNear),
             0, 0, 0, 1
-        ).transpose());
+        ));
     }
 
 }

@@ -13,7 +13,7 @@ export default class Renderer {
             throw new Error('Failed to aquire WebGL2 context.');
         }
         this._gl = gl;
-        this._camera = new OrthographicCamera(-1, 1, 1, -1, 0.001, 1000);
+        this._camera = new OrthographicCamera(-1, this.aspectRatio, 1, -this.aspectRatio, 0.001, 1000);
     }
 
     public get gl() {
@@ -22,6 +22,10 @@ export default class Renderer {
 
     public get canvas() {
         return this.gl.canvas;
+    }
+
+    public get camera() {
+        return this._camera;
     }
 
     public get width() {
@@ -42,6 +46,7 @@ export default class Renderer {
     }
 
     public render(mesh: Mesh) {
+        mesh.program.setMatrixUniform('viewMatrix', this._camera.viewMatrix);
         mesh.program.setMatrixUniform('projectionMatrix', this._camera.projectionMatrix);
 
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);

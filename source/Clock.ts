@@ -9,12 +9,14 @@ interface TimerMap {
 
 export default class Clock {
 
-    private lastTimeCheck: number;
-    private timerMap: TimerMap;
+    private _creationTime: number;
+    private _lastTimeCheck: number;
+    private _timerMap: TimerMap;
 
     public constructor() {
-        this.lastTimeCheck = this.now;
-        this.timerMap = {};
+        this._creationTime = this.now;
+        this._lastTimeCheck = this._creationTime;
+        this._timerMap = {};
     }
 
     public get now() {
@@ -22,22 +24,26 @@ export default class Clock {
     }
 
     public get deltaTime() {
-        const deltaTime = this.now - this.lastTimeCheck;
-        this.lastTimeCheck = this.now;
+        const deltaTime = this.now - this._lastTimeCheck;
+        this._lastTimeCheck = this.now;
         return deltaTime;
     }
 
+    public get age() {
+        return this.now - this._creationTime;
+    }
+
     public createTimer(label: string, duration: number) {
-        this.timerMap[label] = { duration, lastTriggerTime: this.now };
+        this._timerMap[label] = { duration, lastTriggerTime: this.now };
     }
 
     public removeTimer(label: string) {
-        delete this.timerMap[label];
+        delete this._timerMap[label];
     }
 
     public hasTimerElapsed(label: string) {
-        if (label in this.timerMap) {
-            const timer = this.timerMap[label];
+        if (label in this._timerMap) {
+            const timer = this._timerMap[label];
             if (this.now - timer.lastTriggerTime > timer.duration) {
                 timer.lastTriggerTime = this.now;
                 return true;

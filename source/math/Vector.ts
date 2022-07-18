@@ -8,7 +8,7 @@ export default class Vector {
         this._size = this.components.length;
     }
 
-    get size() {
+    public get size() {
         return this._size;
     }
 
@@ -30,69 +30,78 @@ export default class Vector {
         return this;
     }
 
-    add(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public set(...values: number[]) {
+        if (this.components.length !== values.length) {
+            throw new Error(`${this.size}-component vector cannot be set with ${values.length} values.`);
+        }
+        for (let i = 0; i < values.length; i++) {
+            this.components[i] = values[i];
+        }
+    }
+
+    public add(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.componentWiseOperation((a, b) => a + b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    subtract(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public subtract(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.componentWiseOperation((a, b) => a - b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    multiply(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public multiply(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.componentWiseOperation((a, b) => a * b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    divide(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public divide(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.componentWiseOperation((a, b) => a / b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    modulate(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public modulate(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.componentWiseOperation((a, b) => a % b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    getSum(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getSum(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.clone().add(vectorOrFirstComponent, ...otherComponents);
     }
 
-    getDifference(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getDifference(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.clone().subtract(vectorOrFirstComponent, ...otherComponents);
     }
 
-    getProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.clone().multiply(vectorOrFirstComponent, ...otherComponents);
     }
 
-    getQuotient(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getQuotient(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.clone().divide(vectorOrFirstComponent, ...otherComponents);
     }
 
-    getRemainder(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getRemainder(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         return this.clone().modulate(vectorOrFirstComponent, ...otherComponents);
     }
 
-    getDotProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getDotProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         const product = this.clone().multiply(vectorOrFirstComponent, ...otherComponents);
         return product.components.reduce((sum, component) => sum + component, 0);
     }
 
-    getDistance(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    public getDistance(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         const intermediary = this.clone().componentWiseOperation((a, b) => (b - a) * (b - a), vectorOrFirstComponent, ...otherComponents);
         return Math.sqrt(intermediary.components.reduce((sum, component) => sum + component, 0));
     }
 
-    getMagnitude() {
+    public getMagnitude() {
         return this.getDistance(new Vector(this.size));
     }
 
-    isZero() {
+    public isZero() {
         return this.components.every((component) => component === 0);
     }
 
-    clone() {
+    public clone() {
         return new Vector(this.components[0], ...this.components.slice(1));
     }
 
-    toString() {
+    public toString() {
         return `(${this.components.join(', ')})`;
     }
 
