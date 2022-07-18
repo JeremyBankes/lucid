@@ -19,6 +19,10 @@ export default class Matrix {
         return this._data.length / this.width;
     }
 
+    public get(column: number, row: number) {
+        return this._data[row * this.width + column];
+    }
+
     public transpose() {
         const oldData = [...this._data];
         for (let i = 0; i < this._data.length; i++) {
@@ -27,10 +31,25 @@ export default class Matrix {
             this._data[x * this.height + y] = oldData[y * this.width + x];
         }
         this._width = this.height;
+        return this;
     }
 
     public multiply(matrix: Matrix) {
-        // TO-DO Matrix multiplication
+        const data = new Array(this.width * this.height);
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < matrix.width; j++) {
+                data[i * this.width + j] = 0;
+                for (let k = 0; k < this.width; k++) {
+                    data[i * this.width + j] += this.get(k, i) * matrix.get(j, k);
+                }
+            }
+        }
+        this._data = data;
+        return this;
+    }
+
+    public toArray() {
+        return [...this._data];
     }
 
     public toString() {

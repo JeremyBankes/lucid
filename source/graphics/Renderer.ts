@@ -1,8 +1,11 @@
+import Camera from './Camera.js';
 import Mesh from './Mesh.js';
+import OrthographicCamera from './OrthographicCamera.js';
 
 export default class Renderer {
 
     private _gl: WebGL2RenderingContext;
+    private _camera: Camera;
 
     public constructor(canvas: HTMLCanvasElement) {
         const gl = canvas.getContext('webgl2');
@@ -10,6 +13,7 @@ export default class Renderer {
             throw new Error('Failed to aquire WebGL2 context.');
         }
         this._gl = gl;
+        this._camera = new OrthographicCamera(-1, 1, 1, -1, 0.001, 1000);
     }
 
     public get gl() {
@@ -38,6 +42,8 @@ export default class Renderer {
     }
 
     public render(mesh: Mesh) {
+        mesh.program.setMatrixUniform('projectionMatrix', this._camera.projectionMatrix);
+
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
         this.gl.useProgram(mesh.program.handle);
         this.gl.bindBuffer(mesh.vertexData.vertexBuffer.glBufferType, mesh.vertexData.vertexBuffer.handle);

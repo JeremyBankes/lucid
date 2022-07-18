@@ -50,7 +50,27 @@ export default class Vector {
         return this.componentWiseOperation((a, b) => a % b, vectorOrFirstComponent, ...otherComponents);
     }
 
-    dot(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+    getSum(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+        return this.clone().add(vectorOrFirstComponent, ...otherComponents);
+    }
+
+    getDifference(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+        return this.clone().subtract(vectorOrFirstComponent, ...otherComponents);
+    }
+
+    getProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+        return this.clone().multiply(vectorOrFirstComponent, ...otherComponents);
+    }
+
+    getQuotient(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+        return this.clone().divide(vectorOrFirstComponent, ...otherComponents);
+    }
+
+    getRemainder(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
+        return this.clone().modulate(vectorOrFirstComponent, ...otherComponents);
+    }
+
+    getDotProduct(vectorOrFirstComponent: Vector | number, ...otherComponents: number[]) {
         const product = this.clone().multiply(vectorOrFirstComponent, ...otherComponents);
         return product.components.reduce((sum, component) => sum + component, 0);
     }
