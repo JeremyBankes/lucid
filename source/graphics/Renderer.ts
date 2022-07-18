@@ -53,6 +53,7 @@ export default class Renderer {
         this.gl.useProgram(mesh.program.handle);
         this.gl.bindBuffer(mesh.vertexData.vertexBuffer.glBufferType, mesh.vertexData.vertexBuffer.handle);
         this.gl.bindVertexArray(mesh.vertexData.handle);
+        this.gl.bindTexture(this.gl.TEXTURE_2D, mesh.texture.handle);
         if (mesh.vertexData.indexed) {
             this.gl.bindBuffer(mesh.vertexData.indexBuffer.glBufferType, mesh.vertexData.indexBuffer.handle);
             this.gl.drawElements(this.gl.TRIANGLES, mesh.vertexData.indexBuffer.size, this.gl.UNSIGNED_SHORT, 0);

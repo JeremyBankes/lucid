@@ -1,13 +1,21 @@
 import Buffer from './Buffer.js';
 import Renderer from './Renderer.js';
-import VertexAttribute from './VertexAttribute.js';
 
 export default class VertexData {
 
 
     private _renderer: Renderer;
     private _handle: WebGLVertexArrayObject;
-    private _attributeMap: { [index: number]: VertexAttribute };
+    private _attributeMap: {
+        [index: number]: {
+            index: number,
+            size: number,
+            type: number,
+            normalized: boolean,
+            stride: number,
+            offset: number
+        }
+    };
 
     public vertexBuffer: Buffer;
     public indexBuffer: Buffer;
@@ -42,19 +50,17 @@ export default class VertexData {
         return count;
     }
 
-    public enableAttribute(attribute: VertexAttribute) {
-        this._attributeMap[attribute.index] = attribute;
+    public enableAttribute(index: number, size: number, type: number, normalized: boolean, stride: number, offset: number) {
+        this._attributeMap[index] = { index, size, type, normalized, stride, offset };
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexBuffer.handle);
         this.gl.bindVertexArray(this.handle);
-        this.gl.vertexAttribPointer(attribute.index, attribute.size, attribute.type, attribute.normalized, attribute.stride, attribute.offset);
-        this.gl.enableVertexAttribArray(attribute.index);
-        attribute.enabled = true;
+        this.gl.vertexAttribPointer(index, size, type, normalized, stride, offset);
+        this.gl.enableVertexAttribArray(index);
     }
 
     public disableAttribute(attributeIndex: number) {
         const attribute = this._attributeMap[attributeIndex];
         this.gl.disableVertexAttribArray(attribute.index);
-        attribute.enabled = false;
     }
 
 }

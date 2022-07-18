@@ -40,6 +40,11 @@ export default class ShaderProgram {
         }
     }
 
+    public setIntegerUniform(name: string, value: number) {
+        this.gl.useProgram(this.handle);
+        this.gl.uniform1i(this._getUniformLocation(name), value);
+    }
+
     public setFloatUniform(name: string, value: number) {
         this.gl.useProgram(this.handle);
         this.gl.uniform1f(this._getUniformLocation(name), value);
