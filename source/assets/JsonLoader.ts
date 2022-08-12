@@ -1,4 +1,4 @@
-import ResourceLoader from './ResourceLoader.js';
+import ResourceLoader from './ResourceLoader';
 
 export default class JsonLoader extends ResourceLoader {
 

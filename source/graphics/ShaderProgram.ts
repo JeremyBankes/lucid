@@ -1,7 +1,7 @@
-import Matrix from '../math/Matrix.js';
-import Vector from '../math/Vector.js';
-import Renderer from './Renderer.js';
-import Shader from './Shader.js';
+import Matrix from '../math/Matrix';
+import Vector from '../math/Vector';
+import Renderer from './Renderer';
+import Shader from './Shader';
 
 export default class ShaderProgram {
 

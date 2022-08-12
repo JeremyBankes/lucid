@@ -1,6 +1,6 @@
-import TextLoader from '../assets/TextLoader.js';
-import Renderer from './Renderer.js';
-import Shader, { ShaderType } from './Shader.js';
+import TextLoader from '../assets/TextLoader';
+import Renderer from './Renderer';
+import Shader, { ShaderType } from './Shader';
 
 export default class ShaderLoader extends TextLoader {
 

@@ -1,12 +1,12 @@
-import AssetManager from './assets/AssetManager.js';
-import DomLoader from './assets/DomLoader.js';
-import ImageBitmapLoader from './assets/ImageBitmapLoader.js';
-import JsonLoader from './assets/JsonLoader.js';
-import TextLoader from './assets/TextLoader.js';
-import Clock from './Clock.js';
-import Renderer from './graphics/Renderer.js';
-import ShaderLoader from './graphics/ShaderLoader.js';
-import StateManager from './state/StateManager.js';
+import AssetManager from './assets/AssetManager';
+import DomLoader from './assets/DomLoader';
+import ImageBitmapLoader from './assets/ImageBitmapLoader';
+import JsonLoader from './assets/JsonLoader';
+import TextLoader from './assets/TextLoader';
+import Clock from './Clock';
+import Renderer from './graphics/Renderer';
+import ShaderLoader from './graphics/ShaderLoader';
+import StateManager from './states/StateManager';
 
 export default class Application {
 

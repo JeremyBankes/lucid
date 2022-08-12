@@ -1,6 +1,6 @@
-import Camera from './Camera.js';
-import Mesh from './Mesh.js';
-import OrthographicCamera from './OrthographicCamera.js';
+import Camera from './Camera';
+import Mesh from './Mesh';
+import OrthographicCamera from './OrthographicCamera';
 
 export default class Renderer {
 

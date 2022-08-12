@@ -1,4 +1,4 @@
-import State from './State.js';
+import State from './State';
 
 interface StateMap {
     [key: string]: State

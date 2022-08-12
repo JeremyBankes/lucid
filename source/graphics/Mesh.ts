@@ -1,6 +1,6 @@
-import ShaderProgram from './ShaderProgram.js';
-import Texture from './Texture.js';
-import VertexData from './VertexData.js';
+import ShaderProgram from './ShaderProgram';
+import Texture from './Texture';
+import VertexData from './VertexData';
 
 export default class Mesh {
 

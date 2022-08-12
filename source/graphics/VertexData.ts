@@ -1,5 +1,5 @@
-import Buffer from './Buffer.js';
-import Renderer from './Renderer.js';
+import Buffer from './Buffer';
+import Renderer from './Renderer';
 
 export default class VertexData {
 

@@ -1,4 +1,4 @@
-import ResourceLoader from './ResourceLoader.js';
+import ResourceLoader from './ResourceLoader';
 
 interface ResourceDescriptor {
     name: string,
@@ -51,7 +51,7 @@ export default class AssetManager {
                     try {
                         resource = await loader.load(response);
                     } catch (error) {
-                        console.warn(new Error(`Failed to load resource "${resourceDescriptor.name}" of type "${resourceDescriptor.contentType}".`, { cause: error }));
+                        console.warn(new Error(`Failed to load resource "${resourceDescriptor.name}" of type "${resourceDescriptor.contentType}". (Source: ${resourceDescriptor.source})`, { cause: error }));
                         console.warn(error);
                     }
                     if (resourceLoadedCallback !== null) {

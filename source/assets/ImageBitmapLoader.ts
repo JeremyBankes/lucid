@@ -1,4 +1,4 @@
-import ResourceLoader from './ResourceLoader.js';
+import ResourceLoader from './ResourceLoader';
 
 export default class ImageBitmapLoader extends ResourceLoader {
 

@@ -1,4 +1,4 @@
-import Vector from './Vector.js';
+import Vector from './Vector';
 
 export default class Vector3 extends Vector {
 
