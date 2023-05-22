@@ -1,66 +1,45 @@
-import Renderer from './Renderer';
+import { Renderer } from "./Renderer";
 
-export type BufferType = 'array' | 'elementArray';
+export class Buffer {
 
-export default class Buffer {
+    public readonly renderer: Renderer;
+    public readonly handle: GPUBuffer;
 
-    private _renderer: Renderer;
-    private _handle: WebGLBuffer;
-    private _type: BufferType;
-    private _size: number;
-
-    public constructor(renderer: Renderer, type: BufferType = 'array') {
-        this._renderer = renderer;
-        this._handle = renderer.gl.createBuffer();
-        this._type = type;
+    /** 
+     * @param renderer 
+     * @param usage @see {@link Buffer.USAGE}
+     * @param size 
+     */
+    public constructor(renderer: Renderer, usage: number, size: number) {
+        this.renderer = renderer;
+        this.handle = renderer.underlying.device.createBuffer({ size, usage: usage | GPUBufferUsage.COPY_DST });
     }
 
-    public get type() {
-        return this._type;
-    }
-
-    public get glBufferType() {
-        if (this._type === 'array') {
-            return this._renderer.gl.ARRAY_BUFFER;
-        } else if (this._type === 'elementArray') {
-            return this._renderer.gl.ELEMENT_ARRAY_BUFFER;
-        } else {
-            throw new Error(`Unknown buffer type "${this.type}".`);
+    public write(sourceData: BufferSource, destinationOffset: number = 0, sourceOffset: number = 0, size?: number) {
+        if (size === undefined) {
+            size = "length" in sourceData && typeof sourceData.length === "number" ? sourceData.length : sourceData.byteLength;
         }
+        this.renderer.underlying.device.queue.writeBuffer(this.handle, destinationOffset, sourceData, sourceOffset, size);
     }
 
-    get size() {
-        return this._size;
+    public static create(renderer: Renderer, usage: number, data: number[]) {
+        const source = new Float32Array(data);
+        const buffer = new Buffer(renderer, usage, source.byteLength);
+        buffer.write(source, 0, 0, source.length);
+        return buffer;
     }
 
-    public setData(data: BufferSource, size: number) {
-        this._renderer.gl.bindBuffer(this.glBufferType, this._handle);
-        this._renderer.gl.bufferData(this.glBufferType, data, this._renderer.gl.STATIC_DRAW);
-        this._size = size;
-    }
-
-    public setInteger16Data(...data: number[]) {
-        const array = new Uint16Array(data);
-        this.setData(array, array.length);
-    }
-
-    public setInteger32Data(...data: number[]) {
-        const array = new Uint32Array(data);
-        this.setData(array, array.length);
-    }
-
-    public setFloat32Data(...data: number[]) {
-        const array = new Float32Array(data);
-        this.setData(array, array.length);
-    }
-
-    public setFloat64Data(...data: number[]) {
-        const array = new Float64Array(data);
-        this.setData(array, array.length);
-    }
-
-    public get handle() {
-        return this._handle;
-    }
+    public static readonly USAGE = <const>{
+        MAP_READ: GPUBufferUsage.MAP_READ,
+        MAP_WRITE: GPUBufferUsage.MAP_WRITE,
+        COPY_SRC: GPUBufferUsage.COPY_SRC,
+        COPY_DST: GPUBufferUsage.COPY_DST,
+        INDEX: GPUBufferUsage.INDEX,
+        VERTEX: GPUBufferUsage.VERTEX,
+        UNIFORM: GPUBufferUsage.UNIFORM,
+        STORAGE: GPUBufferUsage.STORAGE,
+        INDIRECT: GPUBufferUsage.INDIRECT,
+        QUERY_RESOLVE: GPUBufferUsage.QUERY_RESOLVE
+    };
 
 }

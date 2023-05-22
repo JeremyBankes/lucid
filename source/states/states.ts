@@ -1,2 +1,2 @@
-export { default as State } from './State';
-export { default as StateManager } from './StateManager';
+export { State } from "./State";
+export { StateManager } from "./StateManager";

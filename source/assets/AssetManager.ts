@@ -1,4 +1,5 @@
-import ResourceLoader from './ResourceLoader';
+import { RegularExpression } from "../utilities/RegularExpression";
+import { ResourceLoader } from "./ResourceLoader";
 
 interface ResourceDescriptor {
     name: string,
@@ -10,11 +11,11 @@ interface ResourceLoadedCallback {
     (resource: any, resourceDescriptor: ResourceDescriptor): void;
 }
 
-export default class AssetManager {
+export class AssetManager {
 
     private _queue: ResourceDescriptor[];
-    private _resourceLoaders: ResourceLoader[];
-    private _resourceMap: {};
+    private _resourceLoaders: ResourceLoader<any>[];
+    private _resourceMap: { [Name: string]: any };
 
     public constructor() {
         this._queue = [];
@@ -22,15 +23,15 @@ export default class AssetManager {
         this._resourceMap = {};
     }
 
-    public register(resourceLoader: ResourceLoader) {
+    public register(resourceLoader: ResourceLoader<any>) {
         this._resourceLoaders.push(resourceLoader);
     }
 
-    public add(name: string, source: string, contentType: string = null) {
+    public add(name: string, source: string, contentType?: string) {
         this._queue.push({ name, source, contentType });
     }
 
-    public async load(resourceLoadedCallback: ResourceLoadedCallback = null) {
+    public async load(resourceLoadedCallback?: ResourceLoadedCallback) {
         const tasks = [];
         for (const resourceDescriptor of this._queue) {
             tasks.push(new Promise(async (resolve, reject) => {
@@ -40,10 +41,18 @@ export default class AssetManager {
                         throw new Error(response.statusText);
                     }
                     let contentType = resourceDescriptor.contentType;
-                    if (contentType === null) {
-                        contentType = response.headers.get('content-type').split(';').shift();
+                    if (contentType === undefined && response.headers.has("Content-Type")) {
+                        const headerContentType = response.headers.get("Content-Type") as string;
+                        const match = headerContentType.match(RegularExpression.mimeType);
+                        if (match !== null) {
+                            [contentType] = match;
+                        }
                     }
-                    const loader = this._resourceLoaders.find((loader) => loader.contentTypes.includes(contentType));
+                    let loader = undefined;
+                    if (contentType !== undefined) {
+                        const definedContentType = contentType;
+                        loader = this._resourceLoaders.find((loader) => loader.contentTypes.includes(definedContentType));
+                    }
                     if (loader === undefined) {
                         throw new Error(`No loaders found for content type "${contentType}".`);
                     }
@@ -54,7 +63,7 @@ export default class AssetManager {
                         console.warn(new Error(`Failed to load resource "${resourceDescriptor.name}" of type "${resourceDescriptor.contentType}". (Source: ${resourceDescriptor.source})`, { cause: error }));
                         console.warn(error);
                     }
-                    if (resourceLoadedCallback !== null) {
+                    if (resourceLoadedCallback !== undefined) {
                         resourceLoadedCallback(resource, resourceDescriptor);
                     }
                     this._resourceMap[resourceDescriptor.name] = resource;

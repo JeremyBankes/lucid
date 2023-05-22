@@ -1,4 +1,4 @@
-export default class ResourceLoader {
+export class ResourceLoader<ResourceType> {
 
     protected _contentTypes: string[];
 
@@ -10,8 +10,8 @@ export default class ResourceLoader {
         return this._contentTypes;
     }
 
-    public async load(response: Response): Promise<any> {
-        throw new Error('Unimplemented.');
+    public async load(response: Response): Promise<ResourceType> {
+        throw new Error("Unimplemented.");
     }
 
 }

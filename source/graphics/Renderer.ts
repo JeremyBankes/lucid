@@ -1,65 +1,59 @@
-import Camera from './Camera';
-import Mesh from './Mesh';
-import OrthographicCamera from './OrthographicCamera';
+import { Data } from "@jeremy-bankes/toolbox";
+import { Buffer } from "./Buffer";
+import { Shader } from "./Shader";
+import { VertexShader } from "./VertexShader";
+import { Color } from "../utilities/Color";
+import { FragmentShader } from "./FragmentShader";
+import { Pipeline } from "./Pipeline";
 
-export default class Renderer {
+export interface RendererOptions {
+    clearColor: Color
+}
 
-    private _gl: WebGL2RenderingContext;
-    private _camera: Camera;
+export class Renderer {
 
-    public constructor(canvas: HTMLCanvasElement) {
-        const gl = canvas.getContext('webgl2');
-        if (gl === null) {
-            throw new Error('Failed to aquire WebGL2 context.');
-        }
-        this._gl = gl;
-        this._camera = new OrthographicCamera(-1, this.aspectRatio, 1, -this.aspectRatio, 0.001, 1000);
+    public static readonly DEFAULT_OPTIONS: RendererOptions = { clearColor: Color.BLACK };
+
+    private _context?: GPUCanvasContext;
+    private _adapter?: GPUAdapter;
+    private _device?: GPUDevice;
+    private _preferredCanvasFormat: GPUTextureFormat;
+
+    public clearColor: Color;
+
+    public constructor(options: RendererOptions = Renderer.DEFAULT_OPTIONS) {
+        this._preferredCanvasFormat = navigator.gpu.getPreferredCanvasFormat();
+        this.clearColor = options.clearColor;
     }
 
-    public get gl() {
-        return this._gl;
+    public async initialize(context: GPUCanvasContext) {
+        Data.assert(navigator.gpu !== undefined, "WebGPU is not supported.");
+        const adapter = await navigator.gpu.requestAdapter();
+        Data.assert(adapter !== null, "Failed to request WebGPU adapter.");
+        this._adapter = adapter;
+        this._device = await adapter.requestDevice();
+
+        this._context = context;
+        context.configure({
+            device: this._device,
+            format: navigator.gpu.getPreferredCanvasFormat(),
+            alphaMode: "premultiplied"
+        });
     }
 
-    public get canvas() {
-        return this.gl.canvas;
+    public get underlying() {
+        type UnderlyingAccess = {
+            device: GPUDevice,
+            context: GPUCanvasContext,
+            preferredCanvasFormat: GPUTextureFormat
+        };
+        return new Proxy<UnderlyingAccess>(this as never, {
+            get(target, key) {
+                key = key.toString();
+                const value = target[`_${key}` as never];
+                Data.assert(value !== undefined, `Missing underlying WebGPU resource "${key}".`);
+                return value;
+            }
+        });
     }
-
-    public get camera() {
-        return this._camera;
-    }
-
-    public get width() {
-        return this.canvas.width;
-    }
-
-    public get height() {
-        return this.canvas.height;
-    }
-
-    public get aspectRatio() {
-        return this.width / this.height;
-    }
-
-    public startRender() {
-        this.gl.clearColor(0.05, 0.15, 0.25, 1.0);
-        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-    }
-
-    public render(mesh: Mesh) {
-        mesh.program.setMatrixUniform('viewMatrix', this._camera.viewMatrix);
-        mesh.program.setMatrixUniform('projectionMatrix', this._camera.projectionMatrix);
-
-        this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-        this.gl.useProgram(mesh.program.handle);
-        this.gl.bindBuffer(mesh.vertexData.vertexBuffer.glBufferType, mesh.vertexData.vertexBuffer.handle);
-        this.gl.bindVertexArray(mesh.vertexData.handle);
-        this.gl.bindTexture(this.gl.TEXTURE_2D, mesh.texture.handle);
-        if (mesh.vertexData.indexed) {
-            this.gl.bindBuffer(mesh.vertexData.indexBuffer.glBufferType, mesh.vertexData.indexBuffer.handle);
-            this.gl.drawElements(this.gl.TRIANGLES, mesh.vertexData.indexBuffer.size, this.gl.UNSIGNED_SHORT, 0);
-        } else {
-            this.gl.drawArrays(this.gl.TRIANGLES, 0, mesh.vertexData.count);
-        }
-    }
-
 }

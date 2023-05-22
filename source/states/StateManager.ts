@@ -1,10 +1,10 @@
-import State from './State';
+import { State } from "./State";
 
 interface StateMap {
     [key: string]: State
 }
 
-export default class StateManager {
+export class StateManager {
 
     private _stateMap: StateMap;
     private _currentState?: State;

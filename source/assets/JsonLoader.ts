@@ -1,12 +1,12 @@
-import ResourceLoader from './ResourceLoader';
+import { ResourceLoader } from "./ResourceLoader";
 
-export default class JsonLoader extends ResourceLoader {
+export class JsonLoader extends ResourceLoader<any> {
 
     public constructor() {
-        super('application/json');
+        super("application/json");
     }
 
-    public async load(response: Response): Promise<any> {
+    public async load(response: Response) {
         return await response.json();
     }
 

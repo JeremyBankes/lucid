@@ -1,5 +1,5 @@
 
-export default class State {
+export class State {
 
     private _loaded: boolean;
     public loadImmediately: boolean;
@@ -16,7 +16,7 @@ export default class State {
     }
 
     public get name() {
-        return this.constructor['name'];
+        return this.constructor["name"];
     }
 
     public async load() {
