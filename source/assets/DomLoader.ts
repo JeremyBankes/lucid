@@ -1,6 +1,5 @@
-import { Data } from "@jeremy-bankes/toolbox";
-import { ResourceLoader } from "./ResourceLoader";
 import { RegularExpression } from "../utilities/RegularExpression";
+import { ResourceLoader } from "./ResourceLoader";
 
 export class DomLoader extends ResourceLoader<Document> {
 
