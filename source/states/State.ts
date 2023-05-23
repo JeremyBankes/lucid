@@ -1,4 +1,3 @@
-
 export class State {
 
     private _loaded: boolean;
@@ -29,7 +28,7 @@ export class State {
         console.debug(`Unloaded ${this.name}.`);
     }
 
-    public enter(oldState: State) {
+    public enter(oldState?: State) {
         console.debug(`Entered ${this.name}.`);
     };
 

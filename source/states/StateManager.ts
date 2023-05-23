@@ -1,3 +1,4 @@
+import { Data } from "@jeremy-bankes/toolbox";
 import { State } from "./State";
 
 interface StateMap {
@@ -12,7 +13,7 @@ export class StateManager {
 
     public constructor() {
         this._stateMap = {};
-        this._currentState = null;
+        this._currentState = undefined;
         this._loaded = false;
     }
 
@@ -30,31 +31,30 @@ export class StateManager {
         if (stateName in this._stateMap) {
             return this._stateMap[stateName];
         } else {
-            return null;
+            return undefined;
         }
     }
 
     public update(deltaTime: number) {
-        if (this._currentState !== null) {
+        if (this._currentState !== undefined) {
             this._currentState.update(deltaTime);
         }
     }
 
     public async change(stateName: string) {
         const newState = this.getState(stateName);
+        Data.assert(newState !== undefined, `Failed to find state named "${stateName}".`);
         const oldState = this._currentState;
-        if (oldState !== null) {
-            this._currentState.exit(newState);
+        if (oldState !== undefined) {
+            oldState.exit(newState);
         }
         this._currentState = newState;
         if (!newState.loaded && this._loaded) {
             await newState.load();
         }
         newState.enter(oldState);
-        if (oldState !== null) {
-            if (oldState.automaticallyUnload) {
-                oldState.unload();
-            }
+        if (oldState !== undefined && oldState.automaticallyUnload) {
+            oldState.unload();
         }
     }
 
