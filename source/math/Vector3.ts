@@ -9,6 +9,13 @@ export class Vector3 extends GenericVector<3> {
     public get z() { return this.components[2]; }
     public set z(value: number) { this.components[2] = value; }
 
+    public get width() { return this.x; }
+    public set width(value: number) { this.x = value; }
+    public get height() { return this.y; }
+    public set height(value: number) { this.y = value; }
+    public get depth() { return this.z; }
+    public set depth(value: number) { this.z = value; }
+
     public cross(vector: Vector3) {
         return this.set([
             this.y * vector.z - this.z * vector.y,

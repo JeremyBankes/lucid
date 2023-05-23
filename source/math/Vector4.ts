@@ -11,4 +11,9 @@ export class Vector4 extends GenericVector<4> {
     public get w() { return this.components[3]; }
     public set w(value: number) { this.components[3] = value; }
 
+    public get width() { return this.z; }
+    public set width(value: number) { this.z = value; }
+    public get height() { return this.w; }
+    public set height(value: number) { this.w = value; }
+
 }
