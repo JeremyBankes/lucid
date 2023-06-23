@@ -1,12 +1,7 @@
-import { AssetManager } from "./assets/AssetManager";
-import { DomLoader } from "./assets/DomLoader";
-import { ImageBitmapLoader } from "./assets/ImageBitmapLoader";
-import { JsonLoader } from "./assets/JsonLoader";
-import { TextLoader } from "./assets/TextLoader";
-import { Clock } from "./utilities/Clock";
+import { Clock, Color } from "@jeremy-bankes/toolbox/shared";
+import { AssetManager } from "@jeremy-bankes/toolbox/client";
 import { Renderer } from "./graphics/Renderer";
 import { StateManager } from "./states/StateManager";
-import { Color } from "./utilities/Color";
 
 export class Application {
 
@@ -20,11 +15,6 @@ export class Application {
         this.assets = new AssetManager();
         this.states = new StateManager();
         this.renderer = new Renderer({ clearColor: Color.from(0x000000FF) });
-
-        this.assets.register(new TextLoader());
-        this.assets.register(new DomLoader());
-        this.assets.register(new JsonLoader());
-        this.assets.register(new ImageBitmapLoader());
     }
 
     public async start() {

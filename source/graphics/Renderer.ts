@@ -1,10 +1,4 @@
-import { Data } from "@jeremy-bankes/toolbox";
-import { Buffer } from "./Buffer";
-import { Shader } from "./Shader";
-import { VertexShader } from "./VertexShader";
-import { Color } from "../utilities/Color";
-import { FragmentShader } from "./FragmentShader";
-import { Pipeline } from "./Pipeline";
+import { Color, Data } from "@jeremy-bankes/toolbox/shared";
 
 export interface RendererOptions {
     clearColor: Color

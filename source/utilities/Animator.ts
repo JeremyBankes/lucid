@@ -1,7 +1,6 @@
 import { Application } from "../Application";
-import { Data } from "@jeremy-bankes/toolbox";
-import { Vector2 } from "../math/Vector2";
-import { Vector4 } from "../math/Vector4";
+import { Data } from "@jeremy-bankes/toolbox/shared";
+import { Vector2, Vector4 } from "@jeremy-bankes/vectorics";
 
 /**
  * The meta information describing an animation controlled by {@link Animator}.

@@ -1,4 +1,4 @@
-import { Data } from "@jeremy-bankes/toolbox";
+import { Data } from "@jeremy-bankes/toolbox/shared";
 import { State } from "./State";
 
 interface StateMap {
