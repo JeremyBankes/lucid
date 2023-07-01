@@ -6,7 +6,8 @@ export default {
     output: {
         file: "build/index.js",
         name: "Lucid",
-        format: "esm",
+        format: "cjs",
+        sourcemap: false,
         exports: "named"
     },
     external: [/^@jeremy-bankes\/.+$/],

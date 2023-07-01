@@ -9,7 +9,6 @@ export class Renderer {
     public static readonly DEFAULT_OPTIONS: RendererOptions = { clearColor: Color.BLACK };
 
     private _context?: GPUCanvasContext;
-    private _adapter?: GPUAdapter;
     private _device?: GPUDevice;
     private _preferredCanvasFormat: GPUTextureFormat;
 
@@ -24,7 +23,6 @@ export class Renderer {
         Data.assert(navigator.gpu !== undefined, "WebGPU is not supported.");
         const adapter = await navigator.gpu.requestAdapter();
         Data.assert(adapter !== null, "Failed to request WebGPU adapter.");
-        this._adapter = adapter;
         this._device = await adapter.requestDevice();
 
         this._context = context;
@@ -50,4 +48,10 @@ export class Renderer {
             }
         });
     }
+
+    public get aspectRatio() {
+        Data.assert(this._context !== undefined, "Missing context.");
+        return this._context.canvas.width / this._context.canvas.height;
+    }
+
 }

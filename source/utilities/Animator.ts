@@ -1,6 +1,6 @@
-import { Application } from "../Application";
 import { Data } from "@jeremy-bankes/toolbox/shared";
-import { Vector2, Vector4 } from "@jeremy-bankes/vectorics";
+import { Tuple2, Vector2, Vector4, VectorSource, VectorToolbox } from "@jeremy-bankes/vectorics";
+import { Application } from "../Application";
 
 /**
  * The meta information describing an animation controlled by {@link Animator}.
@@ -38,13 +38,13 @@ export class Animator<Map extends AnimationMap> {
      * @param animations A mapping of names to {@link AnimationMeta}s.
      * @see {@link AnimationMap}.
      */
-    public constructor(sheetSize: Vector2, spriteSize: Vector2, animations: Map) {
-        Data.assert(sheetSize.width % spriteSize.width === 0, `Sprites of width ${spriteSize.width} do not pack nicely into a sprite sheet of width ${sheetSize.width}!`);
-        Data.assert(sheetSize.height % spriteSize.height === 0, `Sprites of height ${spriteSize.height} do not pack nicely into a sprite sheet of height ${sheetSize.height}!`);
+    public constructor(sheetSize: VectorSource<Tuple2>, spriteSize: VectorSource<Tuple2>, animations: Map) {
+        this.sheetSize = VectorToolbox.fromSource(2, sheetSize);
+        this.spriteSize = VectorToolbox.fromSource(2, spriteSize);
+        Data.assert(this.sheetSize.width % this.spriteSize.width === 0, `Sprites of width ${this.spriteSize.width} do not pack nicely into a sprite sheet of width ${this.sheetSize.width}!`);
+        Data.assert(this.sheetSize.height % this.spriteSize.height === 0, `Sprites of height ${this.spriteSize.height} do not pack nicely into a sprite sheet of height ${this.sheetSize.height}!`);
         Data.assert(Object.keys(animations).length > 0, `Attempted to create an animator without any animations supplied!`);
-        this.sheetSize = sheetSize;
-        this.spriteSize = spriteSize;
-        this.spriteGrid = new Vector2(sheetSize.width / spriteSize.width, sheetSize.height / spriteSize.height);
+        this.spriteGrid = new Vector2(this.sheetSize.width / this.spriteSize.width, this.sheetSize.height / this.spriteSize.height);
         this._frameTime = 1 / 12;
         this._remainingFrameTime = 0;
         this._animations = animations;
@@ -152,6 +152,20 @@ export class Animator<Map extends AnimationMap> {
             bounds.width / this.sheetSize.width,
             bounds.height / this.sheetSize.height
         );
+    }
+
+    public getTextureCoordinates(spriteIndex: number = this._currentSpriteIndex): number[] {
+        const bounds = this.getPixelBounds(spriteIndex);
+        return [
+            bounds.x / this.sheetSize.width,
+            bounds.y / this.sheetSize.height,
+            (bounds.x + bounds.width) / this.sheetSize.width,
+            bounds.y / this.sheetSize.height,
+            (bounds.x + bounds.width) / this.sheetSize.width,
+            (bounds.y + bounds.height) / this.sheetSize.height,
+            bounds.x / this.sheetSize.width,
+            (bounds.y + bounds.height) / this.sheetSize.height
+        ];
     }
 
 }

@@ -37,7 +37,7 @@ export class VertexShader extends Shader {
 
     public createVertexState(): GPUVertexState {
         return {
-            module: this.handle,
+            module: this["_handle"],
             entryPoint: this.entryPoint,
             buffers: [
                 {

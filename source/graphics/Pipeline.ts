@@ -7,15 +7,16 @@ import { BindGroup } from "./BindGroup";
 export class Pipeline {
 
     public readonly renderer: Renderer;
-    public readonly handle: GPURenderPipeline;
     public readonly vertexShader: VertexShader;
     public readonly fragmentShader: FragmentShader;
+
+    private readonly _handle: GPURenderPipeline;
 
     public constructor(renderer: Renderer, vertexShader: VertexShader, fragmentShader: FragmentShader) {
         this.renderer = renderer;
         this.vertexShader = vertexShader;
         this.fragmentShader = fragmentShader;
-        this.handle = renderer.underlying.device.createRenderPipeline({
+        this._handle = renderer.underlying.device.createRenderPipeline({
             vertex: vertexShader.createVertexState(),
             fragment: fragmentShader.createFragmentState(),
             primitive: {
@@ -44,10 +45,10 @@ export class Pipeline {
             ]
         });
 
-        renderPassEncoder.setPipeline(this.handle);
-        renderPassEncoder.setVertexBuffer(0, buffer.handle);
+        renderPassEncoder.setPipeline(this._handle);
+        renderPassEncoder.setVertexBuffer(0, buffer["_handle"]);
         for (const bindGroup of bindGroups) {
-            renderPassEncoder.setBindGroup(bindGroup.index, bindGroup.handle);
+            renderPassEncoder.setBindGroup(bindGroup.index, bindGroup["_handle"]);
         }
         renderPassEncoder.draw(3);
         renderPassEncoder.end();

@@ -1,7 +1,8 @@
 {
-    "name": "lucid",
+    "name": "@jeremy-bankes/lucid",
     "version": "1.0.0",
     "description": "A minimalist TypeScript engine for realtime rendering applications.",
+    "main": "build/index.js",
     "types": "build/index.d.ts",
     "scripts": {
         "setup": "npm install",
@@ -31,7 +32,7 @@
     "dependencies": {
         "@jeremy-bankes/schema": "^5.0.10",
         "@jeremy-bankes/toolbox": "^2.2.1",
-        "@jeremy-bankes/vectorics": "^1.0.0"
+        "@jeremy-bankes/vectorics": "file:../vectorics"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.21.5",
